@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "ATM": {
+      "title": "ATM",
+      "description": "An ATM location.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "name": { "type": "string", "description": "Bank/Location name" },
+        "location": { "type": "object", "properties": { "lat": { "type": "number" }, "lng": { "type": "number" } }, "required": ["lat", "lng"] },
+        "status": { "type": "string", "enum": ["online", "offline"] },
+        "lastUpdated": { "type": "string", "format": "date-time" },
+        "accessibility": { "type": "boolean", "description": "Wheelchair and disability accessibility support" },
+        "availableNotes": { "type": "array", "items": { "type": "string" }, "description": "Banknote denominations available (e.g. R20, R50, R100, R200)" },
+        "minWithdrawal": { "type": "number", "description": "Minimum withdrawal amount in ZAR" }
+      },
+      "required": ["id", "name", "location", "status"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "User report about ATM status.",
+      "type": "object",
+      "properties": {
+        "atmId": { "type": "string" },
+        "userId": { "type": "string" },
+        "status": { "type": "string", "enum": ["online", "offline"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["atmId", "userId", "status", "timestamp"]
+    },
+    "SecurityZone": {
+      "title": "SecurityZone",
+      "description": "High-risk area.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "boundary": { "type": "array", "items": { "type": "object", "properties": { "lat": { "type": "number" }, "lng": { "type": "number" } } } },
+        "severity": { "type": "string", "enum": ["high", "very-high"] }
+      },
+      "required": ["id", "name", "boundary", "severity"]
+    }
+  },
+  "firestore": {
+    "/atms/{atmId}": {
+      "schema": "ATM",
+      "description": "Collection of all ATMs."
+    },
+    "/atms/{atmId}/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Subcollection of user reports for an ATM."
+    },
+    "/securityZones/{zoneId}": {
+      "schema": "SecurityZone",
+      "description": "High-risk security zones."
+    }
+  }
+}

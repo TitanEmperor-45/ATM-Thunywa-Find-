@@ -1,0 +1,8 @@
+{
+  "name": "Remix ATM Thunywa",
+  "description": "Locate functional ATMs in South Africa and receive security alerts for safer travel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

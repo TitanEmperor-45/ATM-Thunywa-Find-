@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /atms/{atmId} {
+      allow read, write: if true;
+      match /reports/{reportId} {
+        allow read, write: if true;
+      }
+    }
+
+    match /securityZones/{zoneId} {
+      allow read, write: if true;
+    }
+  }
+}
